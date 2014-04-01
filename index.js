@@ -22,13 +22,11 @@ module.exports = function(word) {
             con += chunk
         })
 
-        res.on('error', function(err){
-            console.log(err)
-        })
-
         res.on('end', function(){
             print(JSON.parse(entities.decode(con)))
         })
+    }).on('error', function(e){
+        console.log(e)
     })
 
 }
