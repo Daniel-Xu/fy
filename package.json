@@ -16,6 +16,9 @@
   "author": "daniel-xu <xwd.forever@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.2.0"
+    "commander": "^2.2.0",
+    "html-entities": "^1.0.10",
+    "colorful": "^2.1.0",
+    "underscore": "^1.6.0"
   }
 }

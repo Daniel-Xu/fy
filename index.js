@@ -1,16 +1,20 @@
 var http = require("http")
-var word = process.argv[2]
-var url = "http://fanyi.youdao.com/openapi.do?keyfrom=forum3&key=1268771022&type=data&doctype=json&version=1.1&q=" + word
-
+//var word = process.argv[2]
+var sources = require('./lib/source.json')
 var program = require('commander')
+var print = require('./lib/print')
+
+//decode entities to character
+var Entities = require('html-entities').AllHtmlEntities;
+entities = new Entities();
 
 program
     .command("fy")
     .version('0.0.1')
     .parse(process.argv)
-    //.option('-')
 
-module.exports = function() {
+module.exports = function(word) {
+    var url = sources["yd"] + encodeURIComponent(word)
     http.get(url, function(res){
         var con = ""
         res.setEncoding('utf8')
@@ -18,8 +22,12 @@ module.exports = function() {
             con += chunk
         })
 
+        res.on('error', function(err){
+            console.log(err)
+        })
+
         res.on('end', function(){
-            console.log(con)
+            print(JSON.parse(entities.decode(con)))
         })
     })
 
